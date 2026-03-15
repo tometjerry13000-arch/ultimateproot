@@ -1,6 +1,7 @@
 // script.js - Version ULTIME avec TOUS les effets - TABLEAUX ALIEN COMPLETS + OPTIONS SPÉCIALES
 // CORRIGÉ : Les transformations Avatar/Alien n'apparaissent que dans la PARTIE 2
 // CORRIGÉ : Gestion des deux cas Avatar (visage humain conservé OU transformation complète) pour TOUS les types d'avatar
+// CORRIGÉ : Ajout des options spéciales (yeux différents, taches de naissance) dans la PARTIE 2
 
 console.log("🚀 Chargement de script.js...");
 
@@ -371,7 +372,7 @@ class PromptGenerator {
         return avatarText;
     }
 
-    // ===== OPTIONS SPÉCIALES (YEUX DIFFÉRENTS + TACHES DE NAISSANCE) - NOUVEAU =====
+    // ===== OPTIONS SPÉCIALES (YEUX DIFFÉRENTS + TACHES DE NAISSANCE) =====
     generateSpecialFeatures() {
         let specialText = '';
         let hasFeatures = false;
@@ -683,7 +684,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
         // TOUTES LES TRANSFORMATIONS SONT GÉNÉRÉES ICI (UNIQUEMENT EN PARTIE 2)
         const alienTransformations = this.generateAlienTransformations();
         const avatarTransformations = this.generateAvatarTransformations();
-        const specialFeatures = this.generateSpecialFeatures();
+        const specialFeatures = this.generateSpecialFeatures(); // ← AJOUTÉ POUR LES YEUX ET TACHES
         
         const advancedEffects = this.generateAdvancedEffects();
         const script = this.generateScript();
@@ -806,7 +807,7 @@ ${this.userData.enableFluo ?
 
 ${alienTransformations}
 ${avatarTransformations}
-${specialFeatures}
+${specialFeatures}  // ← AJOUTÉ ICI POUR LES YEUX ET TACHES
 
 MAQUILLAGE APPLIQUÉ (DÉJÀ FAIT) :
 - Teint parfait et lumineux (déjà appliqué)
@@ -1390,4 +1391,4 @@ window.initCharacters = initCharacters;
 window.displayPrompt = displayPrompt;
 window.updateRecap = updateRecap;
 
-console.log("📦 script.js chargé avec TOUS les effets - CORRIGÉ : transformations Avatar/Alien uniquement en PARTIE 2 - Gestion des 4 cas Avatar");
+console.log("📦 script.js chargé avec TOUS les effets - CORRIGÉ : transformations Avatar/Alien uniquement en PARTIE 2 - OPTIONS SPÉCIALES (yeux/taches) ajoutées");

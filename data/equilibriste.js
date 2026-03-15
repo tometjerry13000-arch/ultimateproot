@@ -1,5 +1,13 @@
 // data/equilibriste.js - Personnage Équilibriste avec objet personnalisable
+// Dans generateEquilibristePart1(), ajouter :
+const floatingTexts = this.generateFloatingWords('part1');  // ← RÉCUPÉRER LES TEXTES
 
+// Et les insérer dans le retour :
+return `
+🎪 SÉQUENCE ÉQUILIBRISTE - PARTIE 1 :
+...
+${floatingTexts}
+...`;
 const equilibristeData = {
     name: "🎪 Équilibriste",
     dance: "Danse d'équilibre",

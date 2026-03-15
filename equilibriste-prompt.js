@@ -1,5 +1,5 @@
 // equilibriste-prompt.js - Fonctions de génération de prompt pour l'Équilibriste
-// CORRIGÉ : Intègre tous les effets (textes, bisous, gestes, confettis, etc.)
+// CORRIGÉ : Intègre tous les effets (textes, bisous, gestes, confettis, etc.) + taches de naissance
 
 // Récupérer les fonctions du générateur principal
 function getGesturesText(userData) {
@@ -151,7 +151,7 @@ TRANSITION :
 Au moment le plus intense, elle rapproche ses mains de l'objectif dans un geste théâtral, les plaquant contre la caméra pour masquer entièrement l'image. Pendant ce court instant, elle se recentre, respire, prête pour la suite.`;
 }
 
-function generateEquilibristePart2(objet, options, userData, floatingTexts, baseEffects, advancedEffects) {
+function generateEquilibristePart2(objet, options, userData, floatingTexts, baseEffects, advancedEffects, specialFeatures) {
     const objetDesc = getObjetDescription(objet);
     const regardObjet = options.regardObjet ? "Elle lève fréquemment les yeux vers l'objet, vérifiant sa stabilité du regard" : "";
     const suspense = options.suspense ? "Les mouvements ralentissent, la tension monte..." : "";
@@ -171,6 +171,8 @@ function generateEquilibristePart2(objet, options, userData, floatingTexts, base
     return `🎪 SÉQUENCE ÉQUILIBRISTE - PARTIE 2 - FINALE SUSPENSE :
 
 ${objetDesc} toujours en équilibre parfait sur sa tête.
+
+${specialFeatures}
 
 MOUVEMENTS PLUS AUDACIEUX :
 - Ses mouvements deviennent plus fluides, plus sensuels
@@ -247,8 +249,9 @@ function enhancePromptGenerator() {
                 const floatingTexts = this.generateFloatingWords('part2');
                 const baseEffects = getBaseEffectsText();
                 const advancedEffects = getAdvancedEffectsText();
+                const specialFeatures = this.generateSpecialFeatures();
                 
-                return generateEquilibristePart2(objet, options, this.userData, floatingTexts, baseEffects, advancedEffects);
+                return generateEquilibristePart2(objet, options, this.userData, floatingTexts, baseEffects, advancedEffects, specialFeatures);
             }
             
             return originalGeneratePart2.call(this);
@@ -260,7 +263,7 @@ function enhancePromptGenerator() {
             // Les données sont déjà collectées par la méthode originale
         };
         
-        console.log("🎪 PromptGenerator amélioré avec Équilibriste - TOUS LES EFFETS conservés");
+        console.log("🎪 PromptGenerator amélioré avec Équilibriste - TOUS LES EFFETS conservés + TACHES DE NAISSANCE");
     }
 }
 

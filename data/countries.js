@@ -1244,6 +1244,151 @@ equilibriste: {
         ]
     }
 },
+
+
+butterfly_fairy: {
+    type: "fairy",
+    name: "🦋 Fée des Papillons",
+    dance: "Danse des Ailes",
+    palmColors: { left: "#ff69b4", right: "#87ceeb" },
+    finalOutfit: {
+        description: "tenue de fée papillon",
+        colors: ["rose", "bleu ciel", "violet"],
+        elements: ["robe en pétales", "ailes de papillon géantes", "voiles irisés", "corset fleuri"],
+        accessories: ["antennes lumineuses", "poudre magique", "fleurs volantes", "bijoux en cristal"]
+    },
+    hairFluo: ["rose", "bleu", "violet"],
+    background: "jardin enchanté, fleurs géantes, papillons multicolores, cascade magique",
+    danceMoves: {
+        part1: ["battements d'ailes", "vols planés", "poses sur les fleurs"],
+        part2: ["danse des papillons", "métamorphose colorée", "envol final"]
+    }
+},
+
+
+
+  cabaret: {
+    type: "default",
+    name: "🎤 Chanteuse de Cabaret",
+    dance: "Danse de Cabaret",
+    palmColors: { left: "#ff69b4", right: "#000000" },
+    finalOutfit: {
+        description: "tenue de cabaret glamour",
+        colors: ["rose", "noir", "argent"],
+        elements: ["robe longue à franges", "bas résille", "gants longs", "chaussures à talons"],
+        accessories: ["microphone", "chapeau claque", "boa en plumes", "gants en dentelle"]
+    },
+    hairFluo: ["rose", "argent", "noir"],
+    background: "scène de cabaret parisien, projecteurs, rideaux rouges, piano",
+    danceMoves: {
+        part1: ["poses de chanteuse", "jeux avec le micro", "regards langoureux"],
+        part2: ["danse endiablée", "lancer de chapeau", "final en apothéose"]
+    }
+},
+
+
+
+  supervillain: {
+    type: "default",
+    name: "🦹‍♀️ Super-Vilaine",
+    dance: "Danse du Mal",
+    palmColors: { left: "#8b0000", right: "#000000" },
+    finalOutfit: {
+        description: "tenue de super-vilaine chic",
+        colors: ["rouge sang", "noir", "violet"],
+        elements: ["combinaison en cuir moulante", "cape de velours noir", "bottes à talons aiguilles", "gants longs"],
+        accessories: ["masque de méchante", "sceptre maléfique", "fouet décoratif", "trône sombre"]
+    },
+    hairFluo: ["noir", "rouge", "violet"],
+    background: "repaire secret, éclairs, flammes, ville en contrebas",
+    danceMoves: {
+        part1: ["démarche arrogante", "poses dominatrices", "regards cruels"],
+        part2: ["danse de la tentation", "jeux avec le fouet", "rire diabolique final"]
+    }
+},
+
+
+  geisha_tradi: {
+    type: "geisha",
+    name: "🎎 Geisha Traditionnelle",
+    dance: "Danse Cérémoniale",
+    palmColors: { left: "#ffffff", right: "#ff69b4" },
+    finalOutfit: {
+        description: "kimono traditionnel de geisha",
+        colors: ["rouge", "blanc", "or"],
+        elements: ["kimono en soie", "obi large", "manches longues", "chaussures traditionnelles"],
+        accessories: ["épingles à cheveux en fleurs", "éventail pliant", "ombrelle", "maquillage blanc"]
+    },
+    hairFluo: ["noir", "rouge", "or"],
+    background: "maison de thé japonaise, jardin zen, lanternes",
+    danceMoves: {
+        part1: ["gestes lents et précis", "pas glissés", "jeux d'éventail subtils"],
+        part2: ["danse cérémoniale accélérée", "dévoilement de la nuque", "poses gracieuses"]
+    }
+}, 
+
+
+
+  djinn: {
+    type: "default",
+    name: "🧞 Djinn",
+    dance: "Danse du Génie",
+    palmColors: { left: "#ffd700", right: "#4b0082" },
+    finalOutfit: {
+        description: "tenue de génie mystique",
+        colors: ["or", "violet", "turquoise"],
+        elements: ["pantalon bouffant", "haut brodé", "voiles transparents", "bijoux en or"],
+        accessories: ["lampe magique", "fumée parfumée", "bracelets qui tintent", "poudre d'étoiles"]
+    },
+    hairFluo: ["or", "violet", "turquoise"],
+    background: "palais des mille et une nuits, tapis volant, ciel étoilé",
+    danceMoves: {
+        part1: ["mouvements mystiques", "ondulations de génie", "gestes d'invocation"],
+        part2: ["danse d'exaucement", "apparition de fumée magique", "jeux avec la lampe"]
+    }
+},
+
+
+
+  clown: {
+    type: "default",
+    name: "🤡 Clowne",
+    dance: "Danse Burlesque",
+    palmColors: { left: "#ff0000", right: "#0000ff" },
+    finalOutfit: {
+        description: "tenue de clown chic et sensuelle",
+        colors: ["rouge", "bleu", "jaune"],
+        elements: ["justaucorps à pois", "froufrous", "col clowne", "bretelles"],
+        accessories: ["nez rouge (optionnel)", "chapeau pointu", "gants blancs", "fleurs qui arrosent"]
+    },
+    hairFluo: ["rouge", "bleu", "vert"],
+    background: "chapiteau de cirque coloré, projecteurs, public hilare",
+    danceMoves: {
+        part1: ["mouvements exagérés", "clins d'œil comiques", "poses burlesques"],
+        part2: ["cascade de blagues visuelles", "jeux avec des accessoires", "final explosif"]
+    }
+},
+
+
+
+chinese_tradi: {
+    type: "default",
+    name: "🏮 Danseuse Chinoise",
+    dance: "Danse Traditionnelle",
+    palmColors: { left: "#ff0000", right: "#ffd700" },
+    finalOutfit: {
+        description: "tenue traditionnelle chinoise",
+        colors: ["rouge", "or", "vert"],
+        elements: ["qipao moderne", "manches longues", "broderies de dragons", "ceinture en soie"],
+        accessories: ["éventail rond", "épingles à cheveux", "ombrelle en papier", "bijoux en jade"]
+    },
+    hairFluo: ["noir", "rouge", "or"],
+    background: "jardin chinois, pont rouge, lanternes, cerisiers en fleurs",
+    danceMoves: {
+        part1: ["gestes gracieux", "pas glissés", "jeux d'éventail"],
+        part2: ["danse des dragons", "tours rapides", "final en apothéose"]
+    }
+},
        circus: {
         type: "circus",
         name: "🎪 Acrobate",

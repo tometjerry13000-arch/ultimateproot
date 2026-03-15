@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROMPT DANCE STUDIO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff, #f0f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .version {
+            color: #00f3ff;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 20px;
+        }
+        
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-header i {
+            color: #00f3ff;
+            font-size: 1.2em;
+        }
+        
+        .card-header h3 {
+            flex: 1;
+            font-size: 1.1em;
+        }
+        
+        .badge {
+            background: #00f3ff;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .character-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        
+        .character-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .character-card.selected {
+            background: linear-gradient(135deg, #00f3ff, #f0f);
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .selected-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        
+        .selected-info span {
+            color: #00f3ff;
+            font-weight: bold;
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: #00f3ff;
+            background: rgba(0, 243, 255, 0.1);
+        }
+        
+        .upload-area i {
+            font-size: 3em;
+            color: #00f3ff;
+            margin-bottom: 10px;
+        }
+        
+        .image-preview {
+            position: relative;
+            margin-top: 15px;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #00f3ff;
+        }
+        
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.8);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .color-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .color-item {
+            flex: 1;
+        }
+        
+        .color-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .color-item input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            cursor: pointer;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn.primary {
+            background: linear-gradient(135deg, #00f3ff, #f0f);
+            color: #000;
+        }
+        
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn.small {
+            padding: 5px 10px;
+            font-size: 0.8em;
+            width: auto;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 243, 255, 0.3);
+        }
+        
+        .outfit-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        
+        .outfit-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            resize: vertical;
+        }
+        
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(135deg, #00f3ff, #f0f);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .switch-label {
+            flex: 1;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .full-width {
+            width: 100%;
+        }
+        
+        select {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        select option {
+            background: #333;
+        }
+        
+        .slider-input {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .number-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .number-item {
+            flex: 1;
+        }
+        
+        .number-item input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        
+        .info-note {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #00f3ff;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .alien-card {
+            border: 2px solid #00ff00;
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 0, 0, 0.3));
+        }
+        
+        .avatar-card {
+            border: 2px solid #00ffff;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 0, 255, 0.1));
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #00f3ff, #f0f);
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.5);
+        }
+        
+        .right-col {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+        }
+        
+        .result-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .prompt-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #00f3ff, #f0f);
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .prompt-display {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .recap, .tips {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .recap h4, .tips h4 {
+            margin-bottom: 10px;
+            color: #00f3ff;
+        }
+        
+        .tips ul {
+            list-style: none;
+        }
+        
+        .tips li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tips li i {
+            color: #00ff00;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00f3ff, #f0f);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1><i class="fas fa-robot"></i> PROMPT DANCE STUDIO</h1>
+            <div class="version">v6.0 ULTIME - 55 personnages - Tous les effets - Visage 8K</div>
+        </header>
+
+        <div class="main-content">
+            <!-- COLONNE GAUCHE - PARAMÈTRES -->
+            <div class="left-col">
+                <!-- SECTION PERSONNAGES -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-user-tag"></i>
+                        <h3>PERSONNAGES</h3>
+                        <span class="badge">55</span>
+                    </div>
+                    <div class="card-body">
+                        <input type="text" id="characterSearch" placeholder="Rechercher..." class="search-input">
+                        <div class="characters-grid" id="countryGrid"></div>
+                        <div class="selected-info" id="selectedCountry">
+                            Sélectionné: <span>Aucun</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION UPLOAD -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-camera"></i>
+                        <h3>IMAGE DE RÉFÉRENCE</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Cliquez ou glissez votre photo</p>
+                            <input type="file" id="imageInput" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview" id="imagePreview" style="display: none;">
+                            <img id="previewImg" src="#" alt="Aperçu">
+                            <button class="remove-btn" id="removeImage"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION COULEURS -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-palette"></i>
+                        <h3>COULEURS DES PAUMES</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="color-row">
+                            <div class="color-item">
+                                <label>GAUCHE</label>
+                                <input type="color" id="leftPalmColor" value="#ff0000">
+                            </div>
+                            <div class="color-item">
+                                <label>DROITE</label>
+                                <input type="color" id="rightPalmColor" value="#000000">
+                            </div>
+                        </div>
+                        <button class="btn secondary" id="suggestColors">
+                            <i class="fas fa-magic"></i> Suggérer couleurs
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SECTION TENUE DÉPART -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-tshirt"></i>
+                        <h3>TENUE DE DÉPART</h3>
+                    </div>
+                    <div class="card-body">
+                        <input type="text" id="startingTop" placeholder="Haut" value="petit top blanc" class="outfit-input">
+                        <input type="text" id="startingBottom" placeholder="Bas" value="short en jean" class="outfit-input">
+                        <input type="text" id="startingDetails" placeholder="Détails" value="pieds nus" class="outfit-input">
+                    </div>
+                </div>
+
+                <!-- SECTION TENUE FINALE -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-crown"></i>
+                        <h3>TENUE FINALE</h3>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="finalOutfitDescription" rows="4" placeholder="Description de la tenue finale..."></textarea>
+                        <button class="btn primary" id="generateOutfit">
+                            <i class="fas fa-wand-magic"></i> Générer tenue
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SECTION CHEVEUX FLUO -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-magic"></i>
+                        <h3>CHEVEUX FLUO</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="toggle-container">
+                            <label class="switch">
+                                <input type="checkbox" id="enableFluo" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">Activer cheveux fluo</span>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Couleur naturelle</label>
+                            <input type="text" id="naturalHair" value="bruns/noirs" class="full-width">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Couleur fluo</label>
+                            <select id="fluoColor" class="full-width">
+                                <option value="rouge fluo">🔴 ROUGE FLUO</option>
+                                <option value="rose fluo">🌸 ROSE FLUO</option>
+                                <option value="bleu électrique">💙 BLEU ÉLECTRIQUE</option>
+                                <option value="vert fluo">💚 VERT FLUO</option>
+                                <option value="jaune fluo">💛 JAUNE FLUO</option>
+                                <option value="violet fluo">💜 VIOLET FLUO</option>
+                                <option value="orange fluo">🧡 ORANGE FLUO</option>
+                                <option value="argent métallique">✨ ARGENT</option>
+                                <option value="or cosmique">🌟 OR COSMIQUE</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Intensité fluo <span id="intensityValue">Éclatant</span></label>
+                            <input type="range" id="fluoIntensity" min="1" max="10" value="9" class="slider-input">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Style de coiffure</label>
+                            <select id="hairStyle" class="full-width">
+                                <option value="détachés">Longs et détachés</option>
+                                <option value="chignon">Chignon élaboré</option>
+                                <option value="tresses">Tresses / Nattes</option>
+                                <option value="attachés">Attachés avec mèches</option>
+                                <option value="bouclés">Bouclés volumineux</option>
+                                <option value="alien">Coiffure extraterrestre</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION TEXTES MAGIQUES FLOTTANTS -->
+                <div class="card" style="border: 2px solid #9b59b6; background: linear-gradient(135deg, rgba(155,89,182,0.1), rgba(52,152,219,0.1));">
+                    <div class="card-header">
+                        <i class="fas fa-magic"></i>
+                        <h3>TEXTES MAGIQUES FLOTTANTS</h3>
+                        <span class="badge" style="background: #9b59b6;">EFFETS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="toggle-container">
+                            <label class="switch">
+                                <input type="checkbox" id="enableMagicTexts">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">Activer les textes magiques</span>
+                        </div>
+                        
+                        <div id="magicTextsOptions" style="margin-top: 15px; display: none;">
+                            
+                            <!-- SÉLECTION DES TEXTES -->
+                            <div class="input-group">
+                                <label>TEXTES À AFFICHER</label>
+                                <div class="checkbox-grid" style="grid-template-columns: repeat(2,1fr);">
+                                    <label class="checkbox-label"><input type="checkbox" id="textFollow" checked> "Follow Me"</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="textLike" checked> "Like Me"</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="textSubscribe"> "Subscribe"</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="textLove"> "Love Me"</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="textWatch"> "Watch Me"</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="textShare"> "Share Me"</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="textHeart"> "❤️" (cœurs)</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="textStar"> "✨" (étoiles)</label>
+                                </div>
+                            </div>
+                            
+                            <!-- EFFETS VISUELS -->
+                            <div class="input-group">
+                                <label>✨ EFFET VISUEL</label>
+                                <select id="textEffect" class="full-width">
+                                    <option value="neon">🔮 Néon lumineux</option>
+                                    <option value="glow">🌟 Lueur magique</option>
+                                    <option value="fire">🔥 Enflammé</option>
+                                    <option value="ice">❄️ Glacé / Cristal</option>
+                                    <option value="rainbow">🌈 Arc-en-ciel</option>
+                                    <option value="gold">👑 Doré étincelant</option>
+                                    <option value="silver">💎 Argenté</option>
+                                    <option value="hologram">🌀 Holographique</option>
+                                </select>
+                            </div>
+                            
+                            <!-- MOUVEMENT -->
+                            <div class="input-group">
+                                <label>🌀 MOUVEMENT</label>
+                                <select id="textMovement" class="full-width">
+                                    <option value="float">🎈 Flottant (léger)</option>
+                                    <option value="spin">🔄 Rotation lente</option>
+                                    <option value="orbit">🌍 Orbite autour d'elle</option>
+                                    <option value="bounce">🤸 Rebondissant</option>
+                                    <option value="wave">🌊 Vagues</option>
+                                    <option value="follow">👁️ Suivent son regard</option>
+                                    <option value="random">🎲 Aléatoire</option>
+                                </select>
+                            </div>
+                            
+                            <!-- COULEUR PRINCIPALE -->
+                            <div class="color-row">
+                                <div class="color-item">
+                                    <label>🎨 COULEUR</label>
+                                    <input type="color" id="textColor" value="#ff6b6b">
+                                </div>
+                                <div class="color-item">
+                                    <label>💎 COULEUR SECONDAIRE</label>
+                                    <input type="color" id="textColor2" value="#4ecdc4">
+                                </div>
+                            </div>
+                            
+                            <!-- TAILLE ET QUANTITÉ -->
+                            <div class="color-row">
+                                <div class="color-item">
+                                    <label>📏 TAILLE</label>
+                                    <select id="textSize" class="full-width">
+                                        <option value="small">Petit</option>
+                                        <option value="medium" selected>Moyen</option>
+                                        <option value="large">Grand</option>
+                                        <option value="xlarge">Très grand</option>
+                                    </select>
+                                </div>
+                                <div class="color-item">
+                                    <label>🔢 QUANTITÉ</label>
+                                    <select id="textQuantity" class="full-width">
+                                        <option value="few">Peu (2-3)</option>
+                                        <option value="medium" selected>Moyen (4-6)</option>
+                                        <option value="many">Beaucoup (7-10)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- POSITION ET TIMING -->
+                            <div class="color-row">
+                                <div class="color-item">
+                                    <label>📍 POSITION</label>
+                                    <select id="textPosition" class="full-width">
+                                        <option value="all">Partout</option>
+                                        <option value="around">Autour d'elle</option>
+                                        <option value="above">Au-dessus</option>
+                                        <option value="behind">En arrière-plan</option>
+                                    </select>
+                                </div>
+                                <div class="color-item">
+                                    <label>⏱️ MOMENT</label>
+                                    <select id="textTiming" class="full-width">
+                                        <option value="whole">Toute la vidéo</option>
+                                        <option value="part2">Partie 2 seulement</option>
+                                        <option value="transition">À la transition</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- EFFETS SPÉCIAUX -->
+                            <div class="input-group">
+                                <label>⚡ EFFETS SPÉCIAUX</label>
+                                <div class="checkbox-grid" style="grid-template-columns: repeat(2,1fr);">
+                                    <label class="checkbox-label"><input type="checkbox" id="effectSparkle" checked> ✨ Scintillement</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="effectPulse"> 💓 Pulsation</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="effectFade"> 🌫️ Apparition/disparition</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="effectTrail"> 🌠 Traînée lumineuse</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="effectShadow"> 👤 Ombre portée</label>
+                                    <label class="checkbox-label"><input type="checkbox" id="effect3d" checked> 🎲 Effet 3D</label>
+                                </div>
+                            </div>
+                            
+                            <!-- APERÇU DU RENDU -->
+                            <div class="info-note" style="margin-top: 15px; padding: 15px; background: rgba(155,89,182,0.2); border-radius: 10px; text-align: center;">
+                                <i class="fas fa-eye"></i> 
+                                <span style="display: block; margin-top: 10px; font-size: 1.2em; text-shadow: 0 0 10px #9b59b6;">
+                                    "Follow Me" • "Like Me" • "❤️"
+                                </span>
+                                <small style="display: block; margin-top: 10px;">Les textes flottent autour d'elle avec des effets magiques !</small>
+                            </div>
+                            
+                            <!-- TEXTE PERSONNALISÉ -->
+                            <div class="input-group" style="margin-top: 15px;">
+                                <label>✏️ TEXTE PERSONNALISÉ (optionnel)</label>
+                                <input type="text" id="customText" placeholder="Ex: Mon propre texte..." class="full-width">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🎬 SECTION FINALE SPECTACULAIRE -->
+                <div class="card" style="border: 3px solid #ffd700; background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,140,0,0.15));">
+                    <div class="card-header">
+                        <i class="fas fa-star"></i>
+                        <h3>🎬 FINALE SPECTACULAIRE (4ème seconde)</h3>
+                        <span class="badge" style="background: #ffd700; color: black;">NOUVEAU</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-note" style="margin-bottom: 15px; background: rgba(255,215,0,0.2); border-left-color: #ffd700; text-align: center;">
+                            <i class="fas fa-clock"></i> 
+                            <strong style="color: #ffd700;">À la 4ème seconde de la partie 2</strong> - Choisis ton/tes gestes finaux
+                        </div>
+                        
+                        <div class="checkbox-grid" style="grid-template-columns: repeat(2,1fr); gap: 12px;">
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalBisou" checked> 💋 Bisou final langoureux
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalCiao" checked> 👋 Ciao de la main
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalMasque"> 🖐️ Masquage de l'objectif
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalCoeur"> 💖 Cœur avec les mains
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalClignement" checked> 😉 Clin d'œil appuyé
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalCascade"> 💋💋 Cascade de bisous
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalRevelation"> ✨ Révélation (bras écartés)
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalSalut"> 👑 Salut royal
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalRegard" checked> 👁️ Regard intense
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalViens"> 👉 Dernier geste "viens"
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalSouffle"> 💨 Souffle sensuel
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalEpaule"> 🔥 Découverte épaule
+                            </label>
+                            <label class="checkbox-label" style="color: #ffd700;">
+                                <input type="checkbox" id="finalCheveux"> 💇 Rejet de cheveux
+                            </label>
+                        </div>
+                        
+                        <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                            <div style="flex: 1;">
+                                <label style="color: #ffd700; display: block; margin-bottom: 5px;">🎞️ FIN DE LA VIDÉO :</label>
+                                <select id="finalOption" class="full-width" style="border-color: #ffd700;">
+                                    <option value="freeze">📸 Freeze frame (image figée)</option>
+                                    <option value="fondu">🌫️ Fondu au noir</option>
+                                    <option value="fonduBlanc">✨ Fondu au blanc</option>
+                                    <option value="zoom">🔍 Zoom sur son visage</option>
+                                    <option value="flou">🌀 Flou artistique</option>
+                                </select>
+                            </div>
+                            
+                            <div style="flex: 1;">
+                                <label style="color: #ffd700; display: block; margin-bottom: 5px;">⏱️ TEMPS DE MAINTIEN :</label>
+                                <select id="finalMaintien" class="full-width" style="border-color: #ffd700;">
+                                    <option value="1">1 seconde</option>
+                                    <option value="2" selected>2 secondes</option>
+                                    <option value="3">3 secondes</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <label style="color: #ffd700; display: block; margin-bottom: 5px;">😊 ÉMOTION FINALE :</label>
+                            <select id="finalEmotion" class="full-width" style="border-color: #ffd700;">
+                                <option value="satisfaite">😌 Satisfaite</option>
+                                <option value="coquine">😏 Coquine</option>
+                                <option value="intense">🔥 Intense</option>
+                                <option value="victorieuse">👑 Victorieuse</option>
+                                <option value="mysterieuse">🖤 Mystérieuse</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <label style="color: #ffd700; display: block; margin-bottom: 5px;">👁️ INTERACTION PUBLIC :</label>
+                            <select id="finalInteraction" class="full-width" style="border-color: #ffd700;">
+                                <option value="regard">Regard dans les yeux</option>
+                                <option value="sourire">Sourire éclatant</option>
+                                <option value="clin">Clin d'œil complice</option>
+                                <option value="main">Main tendue</option>
+                                <option value="tous">Alternance des trois</option>
+                            </select>
+                        </div>
+                        
+                        <div class="info-note" style="margin-top: 15px; background: rgba(255,215,0,0.2);">
+                            <i class="fas fa-info-circle"></i> 
+                            <strong>Conseil :</strong> Tu peux sélectionner 1, 2 ou plusieurs gestes. Ils s'enchaîneront naturellement.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION SÉDUCTION -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-heart"></i>
+                        <h3>SÉDUCTION</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Intensité <span id="seductionValue">9/10</span></label>
+                            <input type="range" id="seductionLevel" min="1" max="10" value="9" class="slider-input">
+                        </div>
+                        
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label"><input type="checkbox" id="gesteRegards" checked> Regards charmeurs</label>
+                            <label class="checkbox-label"><input type="checkbox" id="gesteSourires" checked> Sourires coquins</label>
+                            <label class="checkbox-label"><input type="checkbox" id="gesteClins" checked> Clins d'œil</label>
+                            <label class="checkbox-label"><input type="checkbox" id="gesteLevres" checked> Lèvre mordue</label>
+                            <label class="checkbox-label"><input type="checkbox" id="gesteMains" checked> Mains caressantes</label>
+                            <label class="checkbox-label"><input type="checkbox" id="gesteCheveux" checked> Jeux cheveux</label>
+                            <label class="checkbox-label"><input type="checkbox" id="gesteBisous" checked> Envoyer des bisous</label>
+                            <label class="checkbox-label"><input type="checkbox" id="gesteViens" checked> Geste "viens vers moi"</label>
+                        </div>
+                        
+                        <div class="number-group">
+                            <div class="number-item">
+                                <label>Nombre de bisous</label>
+                                <input type="number" id="bisousCount" value="3" min="1" max="10">
+                            </div>
+                            <div class="number-item">
+                                <label>Nombre de gestes "viens"</label>
+                                <input type="number" id="viensCount" value="4" min="1" max="10">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION EFFETS DE BASE -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-star"></i>
+                        <h3>EFFETS DE BASE</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label"><input type="checkbox" id="effectConfettis" checked> 🎉 Confettis</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectPoudre" checked> ✨ Poudre</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectPétales" checked> 🌸 Pétales</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectFumee" checked> 💨 Fumée</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectLumières" checked> 💡 Lumières</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectPaillettes" checked> 💎 Paillettes</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION EFFETS AVANCÉS -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-bolt"></i>
+                        <h3>EFFETS AVANCÉS</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label"><input type="checkbox" id="effectExplosion"> 💥 Explosion</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectTeleportation"> ⚡ Téléportation</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectMirror"> 🪞 Double / Miroir</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectTimeLapse"> ⏱️ Accéléré</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectHologram"> 👻 Hologrammes</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectClone"> 👯 Clones</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION EFFETS SPÉCIAUX -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-fire"></i>
+                        <h3>EFFETS SPÉCIAUX</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label"><input type="checkbox" id="effectFeu"> 🔥 Flammes</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectEau"> 💧 Eau / Vagues</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectGlace"> ❄️ Glace / Cristaux</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectEclairs"> ⚡ Éclairs</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectPapillons"> 🦋 Papillons</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectPlumes"> 🪶 Plumes</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectLaser"> 💫 Lasers</label>
+                            <label class="checkbox-label"><input type="checkbox" id="effectBulles"> 🫧 Bulles</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION MODE ALIEN (TABLEAU COMPLET AVEC TOUS LES CHOIX) -->
+                <div class="card alien-card">
+                    <div class="card-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>MODE ALIEN</h3>
+                        <span class="badge">CHOIX INDIVIDUELS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="toggle-container">
+                            <label class="switch">
+                                <input type="checkbox" id="enableAlienMode">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">Activer mode extraterrestre</span>
+                        </div>
+                        
+                        <div id="alienOptions" style="margin-top: 15px; display: none;">
+                            <!-- PREMIÈRE LIGNE DE CASES -->
+                            <div class="checkbox-grid">
+                                <label class="checkbox-label"><input type="checkbox" id="alienSkin"> 👽 Peau irisée</label>
+                                <label class="checkbox-label"><input type="checkbox" id="alienEyes"> 👁️ Yeux lumineux</label>
+                                <label class="checkbox-label"><input type="checkbox" id="alienAntenna"> 📡 Antennes</label>
+                                <label class="checkbox-label"><input type="checkbox" id="alienGlow"> ✨ Phosphorescent</label>
+                            </div>
+                            
+                            <!-- DEUXIÈME LIGNE DE CASES -->
+                            <div class="checkbox-grid" style="margin-top: 10px;">
+                                <label class="checkbox-label"><input type="checkbox" id="alienTattoos"> 🌀 Tatouages</label>
+                                <label class="checkbox-label"><input type="checkbox" id="alienHolograms"> 💫 Hologrammes</label>
+                                <label class="checkbox-label"><input type="checkbox" id="alienVoice"> 🎤 Voix modulée</label>
+                                <label class="checkbox-label"><input type="checkbox" id="alienGravity"> 🌠 Apesanteur</label>
+                                <label class="checkbox-label"><input type="checkbox" id="alienTeleportation"> ⚡ Téléportation</label>
+                            </div>
+                            
+                            <!-- OPTIONS DE COULEUR POUR PEAU -->
+                            <div id="alienSkinOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(0,255,0,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #00ff00;">🎨 Couleur de peau</label>
+                                    <select id="alienSkinColor" class="full-width">
+                                        <option value="argent">Argent métallique</option>
+                                        <option value="or">Or cosmique</option>
+                                        <option value="bleu">Bleu holographique</option>
+                                        <option value="violet">Violet galactique</option>
+                                        <option value="rose">Rose nébuleuse</option>
+                                        <option value="cyan">Cyan extraterrestre</option>
+                                        <option value="vert">Vert néon</option>
+                                        <option value="rouge">Rouge martien</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- OPTIONS DE COULEUR POUR YEUX -->
+                            <div id="alienEyesOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(255,0,0,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #ff0000;">👁️ Couleur des yeux</label>
+                                    <select id="alienEyesColor" class="full-width">
+                                        <option value="rouge">Rouge sang</option>
+                                        <option value="bleu">Bleu électrique</option>
+                                        <option value="vert">Vert fluorescent</option>
+                                        <option value="violet">Violet profond</option>
+                                        <option value="jaune">Jaune soufre</option>
+                                        <option value="blanc">Blanc lumineux</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- OPTIONS POUR ANTENNES -->
+                            <div id="alienAntennaOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(255,255,0,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #ffff00;">📡 Style d'antennes</label>
+                                    <select id="antennaStyle" class="full-width">
+                                        <option value="antennes">Antennes fines (insectoïdes)</option>
+                                        <option value="cornes">Cornes stylisées (démoniaques)</option>
+                                        <option value="couronne">Couronne lumineuse (angélique)</option>
+                                        <option value="halo">Halo de lumière (surnaturel)</option>
+                                        <option value="tentacules">Tentacules (cthulhu)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- OPTIONS POUR LUEUR -->
+                            <div id="alienGlowOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(0,255,255,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #00ffff;">✨ Couleur de lueur</label>
+                                    <select id="glowColor" class="full-width">
+                                        <option value="bleu">Bleu</option>
+                                        <option value="vert">Vert</option>
+                                        <option value="rose">Rose</option>
+                                        <option value="violet">Violet</option>
+                                        <option value="or">Or</option>
+                                        <option value="blanc">Blanc</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- OPTIONS POUR TATOUAGES -->
+                            <div id="alienTattoosOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(128,0,128,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #ff00ff;">🌀 Style de tatouages</label>
+                                    <select id="tattooStyle" class="full-width">
+                                        <option value="symboles">Symboles aliens</option>
+                                        <option value="runes">Runes anciennes</option>
+                                        <option value="galaxie">Motifs galactiques</option>
+                                        <option value="circuits">Circuits imprimés</option>
+                                        <option value="geometriques">Formes géométriques</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- OPTIONS POUR HOLOGRAMMES -->
+                            <div id="alienHologramsOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(255,165,0,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #ffa500;">💫 Type d'hologrammes</label>
+                                    <select id="hologramType" class="full-width">
+                                        <option value="etoiles">Étoiles filantes</option>
+                                        <option value="planetes">Planètes miniatures</option>
+                                        <option value="symboles">Symboles mystiques</option>
+                                        <option value="energie">Sphères d'énergie</option>
+                                        <option value="animaux">Créatures holographiques</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="info-note" style="margin-top: 15px;">
+                                <i class="fas fa-info-circle"></i> 
+                                <small>Coche les options que tu souhaites. Chaque option peut être activée indépendamment.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION MODE AVATAR (AVEC CHOIX GARDER VISAGE) -->
+                <div class="card avatar-card">
+                    <div class="card-header">
+                        <i class="fas fa-leaf"></i>
+                        <h3>MODE AVATAR</h3>
+                        <span class="badge">NA'VI</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="toggle-container">
+                            <label class="switch">
+                                <input type="checkbox" id="enableAvatarMode">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">Activer mode Avatar (Na'vi)</span>
+                        </div>
+                        
+                        <div id="avatarOptions" style="margin-top: 15px; display: none;">
+                            <!-- OPTION SPÉCIALE POUR GARDER LE VISAGE -->
+                            <div class="checkbox-grid" style="grid-template-columns: 1fr; background: rgba(0,255,255,0.2); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                                <label class="checkbox-label" style="color: #00ffff; font-weight: bold;">
+                                    <input type="checkbox" id="avatarKeepFace"> 👤 GARDER MON VISAGE HUMAIN (le visage reste identique à l'image)
+                                </label>
+                            </div>
+                            
+                            <div class="info-note" style="margin-bottom: 15px; background: rgba(0,255,255,0.1);">
+                                <i class="fas fa-info-circle"></i> 
+                                <small>Si cette case est cochée, SEUL le corps devient Na'vi, le visage reste strictement identique à l'image de référence.</small>
+                            </div>
+                            
+                            <!-- OPTIONS PHYSIQUES AVATAR -->
+                            <div class="checkbox-grid">
+                                <label class="checkbox-label"><input type="checkbox" id="avatarFullBody" checked> 🔵 Corps Na'vi complet (peau bleue)</label>
+                                <label class="checkbox-label"><input type="checkbox" id="avatarEars"> 👂 Oreilles pointues</label>
+                                <label class="checkbox-label"><input type="checkbox" id="avatarTail"> 🐒 Queue</label>
+                                <label class="checkbox-label"><input type="checkbox" id="avatarStripes"> ✨ Rayures lumineuses</label>
+                                <label class="checkbox-label"><input type="checkbox" id="avatarBioluminescence"> 💡 Points bioluminescents</label>
+                                <label class="checkbox-label"><input type="checkbox" id="avatarTattoos"> 🎨 Peintures tribales</label>
+                            </div>
+                            
+                            <!-- OPTIONS DE COULEUR DE PEAU AVATAR -->
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,255,0.2); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #0088ff;">🎨 Nuance de peau Na'vi</label>
+                                    <select id="avatarSkinTone" class="full-width">
+                                        <option value="bleu nuit">Bleu nuit (classique)</option>
+                                        <option value="turquoise">Turquoise</option>
+                                        <option value="cyan">Cyan</option>
+                                        <option value="bleu glacier">Bleu glacier</option>
+                                        <option value="violet bleuté">Violet bleuté</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- OPTIONS POUR LA QUEUE -->
+                            <div id="avatarTailOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(255,255,0,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #ffff00;">🐒 Style de queue</label>
+                                    <select id="avatarTailStyle" class="full-width">
+                                        <option value="fine">Fine et expressive</option>
+                                        <option value="longue">Longue et préhensile</option>
+                                        <option value="courte">Courte et touffue</option>
+                                        <option value="rayures">Avec rayures</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- OPTIONS POUR LES RAYURES -->
+                            <div id="avatarStripesOptions" style="margin-top: 15px; display: none; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                <div class="input-group">
+                                    <label style="color: #ffffff;">✨ Style de rayures</label>
+                                    <select id="avatarStripesStyle" class="full-width">
+                                        <option value="fines">Fines rayures horizontales</option>
+                                        <option value="epaisses">Rayures épaisses</option>
+                                        <option value="spirales">Motifs en spirale</option>
+                                        <option value="tribales">Motifs tribaux</option>
+                                    </select>
+                                </div>
+                                <div class="input-group" style="margin-top: 10px;">
+                                    <label style="color: #ffffff;">🎨 Couleur des rayures</label>
+                                    <select id="avatarStripesColor" class="full-width">
+                                        <option value="blanc">Blanc</option>
+                                        <option value="argent">Argent</option>
+                                        <option value="or">Or</option>
+                                        <option value="turquoise">Turquoise</option>
+                                        <option value="violet">Violet</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION DÉCOR UNIQUE -->
+                <div class="card" style="border: 3px solid #00ffff; background: linear-gradient(135deg, rgba(0,255,255,0.15), rgba(0,0,139,0.15));">
+                    <div class="card-header">
+                        <i class="fas fa-map"></i>
+                        <h3>DÉCOR</h3>
+                        <span class="badge" style="background: #00ffff; color: black;">UNIQUE</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="toggle-container">
+                            <label class="switch">
+                                <input type="checkbox" id="enableCustomDecor">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">Activer décor personnalisé</span>
+                        </div>
+                        
+                        <div id="customDecorOptions" style="margin-top: 15px; display: none;">
+                            <div class="input-group">
+                                <label>✏️ TON DÉCOR (description libre)</label>
+                                <textarea id="customDecorText" rows="4" placeholder="Exemple: sur une plage paradisiaque de Neptune..." class="full-width"></textarea>
+                            </div>
+                            
+                            <div class="info-note" style="margin-top: 15px; padding: 10px; background: rgba(0,255,255,0.2); border-radius: 8px;">
+                                <i class="fas fa-info-circle"></i> 
+                                <small>Ton décor personnalisé REMPLACERA complètement le décor automatique du personnage !</small>
+                            </div>
+                            
+                            <div style="margin-top: 15px;">
+                                <label>📋 EXEMPLES :</label>
+                                <div style="display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap;">
+                                    <button type="button" class="btn small" onclick="document.getElementById('customDecorText').value = 'sur une plage paradisiaque de Neptune, sable noir irisé, vagues bioluminescentes bleues, ciel avec anneaux planétaires, ambiance mystique'">🏖️ Plage Neptune</button>
+                                    <button type="button" class="btn small" onclick="document.getElementById('customDecorText').value = 'dans un vaisseau spatial abandonné, lumières vacillantes, hublots avec vue sur une nébuleuse, poussière d\'étoiles'">🚀 Vaisseau</button>
+                                    <button type="button" class="btn small" onclick="document.getElementById('customDecorText').value = 'sur un nuage magique, ciel rose et orange, oiseaux arc-en-ciel, échelle de Jacob descendant des cieux'">☁️ Nuage</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-note" style="margin-top: 15px; background: rgba(255,255,255,0.1);">
+                            <i class="fas fa-info-circle"></i> 
+                            <strong>Mode automatique :</strong> Si non activé, le décor sera choisi automatiquement selon ton personnage.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION SCRIPT DU PERSONNAGE -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-comment"></i>
+                        <h3>SCRIPT DU PERSONNAGE</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="toggle-container">
+                            <label class="switch">
+                                <input type="checkbox" id="enableScript">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">Activer dialogue</span>
+                        </div>
+                        
+                        <div id="scriptOptions" style="margin-top: 15px; display: none;">
+                            <div class="input-group">
+                                <label>📝 TEXTE À DIRE</label>
+                                <textarea id="scriptText" rows="3" placeholder="Ex: Bienvenue dans ma danse !" class="full-width"></textarea>
+                            </div>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-label"><input type="checkbox" id="scriptPart1"> Dire en partie 1</label>
+                                <label class="checkbox-label"><input type="checkbox" id="scriptPart2" checked> Dire en partie 2</label>
+                                <label class="checkbox-label"><input type="checkbox" id="scriptFinal"> Dire à la fin</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION NIVEAU DE SURPRISE -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-face-surprise"></i>
+                        <h3>NIVEAU DE SURPRISE</h3>
+                    </div>
+                    <div class="card-body">
+                        <input type="range" id="surpriseLevel" min="1" max="10" value="7" class="slider-input">
+                        <div class="slider-labels" style="display: flex; justify-content: space-between; margin-top: 5px;">
+                            <span>Subtile</span>
+                            <span>Wow</span>
+                            <span>Explosif</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- SECTION OPTIONS SPÉCIALES (YEUX + TACHES) -->
+                <div id="special-options-container" style="border: 2px solid #ff69b4; background: linear-gradient(135deg, rgba(255,105,180,0.15), rgba(255,20,147,0.15)); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                    <div class="card-header" style="margin-bottom: 15px;">
+                        <i class="fas fa-eye" style="color: #ff69b4;"></i>
+                        <h3 style="color: #ff69b4;">OPTIONS SPÉCIALES 8K</h3>
+                        <span class="badge" style="background: #ff69b4;">DÉTAIL ULTRA-RÉALISTE</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; padding: 10px; background: rgba(255,105,180,0.1); border-radius: 8px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="enable-eyes" style="width: 18px; height: 18px;">
+                            <span style="font-weight: bold; color: #ff69b4;">👁️ YEUX DIFFÉRENTS (Hétérochromie) - Ultra-réalistes 8K</span>
+                        </label>
+                        
+                        <div id="eye-controls" style="display:none; margin-top: 15px; margin-left: 30px;">
+                            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 200px;">
+                                    <label style="display: block; margin-bottom: 5px; color: #ffb6c1;">👈 Œil GAUCHE</label>
+                                    <select id="eye-left-select" class="full-width" style="background: rgba(255,105,180,0.2); border-color: #ff69b4;">
+                                        <!-- Rempli par JavaScript -->
+                                    </select>
+                                </div>
+                                <div style="flex: 1; min-width: 200px;">
+                                    <label style="display: block; margin-bottom: 5px; color: #ffb6c1;">👉 Œil DROIT</label>
+                                    <select id="eye-right-select" class="full-width" style="background: rgba(255,105,180,0.2); border-color: #ff69b4;">
+                                        <!-- Rempli par JavaScript -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="info-note" style="margin-top: 10px; background: rgba(255,105,180,0.2);">
+                                <i class="fas fa-info-circle"></i> 
+                                <small>Les yeux seront rendus en macro 8K avec vaisseaux sanguins visibles, reflets multiples et détails infimes de l'iris.</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 10px; background: rgba(255,182,193,0.1); border-radius: 8px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="enable-skin" style="width: 18px; height: 18px;">
+                            <span style="font-weight: bold; color: #ffb6c1;">🎨 TACHES DE NAISSANCE / VITILIGO - Ultra-réalistes 8K</span>
+                        </label>
+                        
+                        <div id="skin-controls" style="display:none; margin-top: 15px; margin-left: 30px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; color: #ffb6c1;">Couleur des taches</label>
+                                <select id="skin-color-select" class="full-width" style="background: rgba(255,182,193,0.2); border-color: #ff69b4;">
+                                    <!-- Rempli par JavaScript -->
+                                </select>
+                            </div>
+                            <div class="info-note" style="margin-top: 10px; background: rgba(255,182,193,0.2);">
+                                <i class="fas fa-info-circle"></i> 
+                                <small>Les taches de naissance sont rendues avec une texture de peau hyper-réaliste : pores visibles, contours naturels, intégration parfaite.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BOUTON GÉNÉRER -->
+                <button class="generate-btn" id="generatePrompt">
+                    <i class="fas fa-bolt"></i> GÉNÉRER LE PROMPT
+                </button>
+            </div>
+
+            <!-- COLONNE DROITE - RÉSULTAT -->
+            <div class="right-col">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3><i class="fas fa-terminal"></i> PROMPT GÉNÉRÉ</h3>
+                        <div class="result-actions">
+                            <button class="icon-btn" id="copyPrompt"><i class="fas fa-copy"></i></button>
+                            <button class="icon-btn" id="exportPrompt"><i class="fas fa-download"></i></button>
+                            <button class="icon-btn" id="clearPrompt"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="prompt-tabs">
+                        <button class="tab-btn active" id="tabFull">Complet</button>
+                        <button class="tab-btn" id="tabPart1">Partie 1</button>
+                        <button class="tab-btn" id="tabPart2">Partie 2</button>
+                        <button class="tab-btn" id="tabConsignes">Consignes</button>
+                    </div>
+                    
+                    <div class="prompt-display" id="promptDisplay"></div>
+                    
+                    <div class="recap">
+                        <h4>RÉCAPITULATIF</h4>
+                        <div id="recapContent"></div>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>CONSEILS</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Sélectionnez un personnage</li>
+                            <li><i class="fas fa-check-circle"></i> Choisissez vos effets</li>
+                            <li><i class="fas fa-check-circle"></i> Générez le prompt</li>
+                            <li><i class="fas fa-check-circle"></i> Copiez dans Grok</li>
+                            <li><i class="fas fa-check-circle" style="color: #ffd700;"></i> Transition naturelle - Changement HORS CAMÉRA</li>
+                            <li><i class="fas fa-check-circle" style="color: #00ffff;"></i> Visage 8K - Pores, cils, vaisseaux sanguins</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 - PROMPT DANCE STUDIO v6.0 ULTIME - 55 personnages - Tous les effets - Visage 8K</p>
+        </footer>
+    </div>
+
+<!-- CHARGEMENT DES SCRIPTS -->
+<script src="data/countries.js"></script>
+<script src="data/actions.js"></script>
+<script src="data/danceMoves.js"></script>
+<script src="data/outfits.js"></script>
+<script src="data/hairColors.js"></script>
+<script src="data/seductionGestures.js"></script>
+<script src="data/specialFeatures.js"></script>
+
+
+<script src="data/equilibriste.js"></script>
+<script src="equilibriste-config.js"></script>
+<script src="equilibriste-prompt.js"></script>
+
+
+<script src="script.js"></script>  <!-- ← UNE SEULE FOIS ! -->
+</body>
+</html>

@@ -2,6 +2,7 @@
 // CORRIGÉ : Les transformations Avatar/Alien n'apparaissent que dans la PARTIE 2
 // CORRIGÉ : Gestion des deux cas Avatar (visage humain conservé OU transformation complète) pour TOUS les types d'avatar
 // CORRIGÉ : Ajout des options spéciales (yeux différents, taches de naissance) dans la PARTIE 2
+// CORRIGÉ : Priorité absolue aux options spéciales quand elles sont cochées
 
 console.log("🚀 Chargement de script.js...");
 
@@ -648,6 +649,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
     }
 
     // ===== PARTIE 2 - TOUTES LES TRANSFORMATIONS APPLIQUÉES =====
+    // AVEC PRIORITÉ ABSOLUE AUX OPTIONS SPÉCIALES (YEUX/TACHES)
     generatePart2() {
         const country = countries[this.userData.country];
         const seductionPhrase = this.getSeductionPhrase(this.userData.seductionLevel);
@@ -684,7 +686,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
         // TOUTES LES TRANSFORMATIONS SONT GÉNÉRÉES ICI (UNIQUEMENT EN PARTIE 2)
         const alienTransformations = this.generateAlienTransformations();
         const avatarTransformations = this.generateAvatarTransformations();
-        const specialFeatures = this.generateSpecialFeatures(); // ← AJOUTÉ POUR LES YEUX ET TACHES
+        const specialFeatures = this.generateSpecialFeatures();
         
         const advancedEffects = this.generateAdvancedEffects();
         const script = this.generateScript();
@@ -702,6 +704,36 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
         // Vérifier les options Avatar
         const avatarMode = document.getElementById('enableAvatarMode')?.checked || false;
         const keepFace = document.getElementById('avatarKeepFace')?.checked || false;
+
+        // ===== CONSTRUCTION DES SECTIONS PRIORITAIRES =====
+        let prioritySection = '';
+        let hasPriorityEyes = false;
+        let hasPrioritySkin = false;
+
+        // Extraire les sections spéciales si elles existent
+        if (specialFeatures.includes('👁️ YEUX ULTRA-RÉALISTES 8K (HÉTÉROCHROMIE)')) {
+            hasPriorityEyes = true;
+            const eyesMatch = specialFeatures.match(/👁️ YEUX ULTRA-RÉALISTES 8K \(HÉTÉROCHROMIE\) :[\s\S]*?(?=\n\n|$)/);
+            if (eyesMatch) {
+                prioritySection += `
+🎯 PRIORITÉ ABSOLUE - YEUX DIFFÉRENTS (HÉTÉROCHROMIE) :
+${eyesMatch[0]}
+⚠️ CES INSTRUCTIONS SUR LES YEUX PRIMENT SUR TOUTE AUTRE DESCRIPTION
+`;
+            }
+        }
+
+        if (specialFeatures.includes('🎨 TACHES DE NAISSANCE / VITILIGO')) {
+            hasPrioritySkin = true;
+            const skinMatch = specialFeatures.match(/🎨 TACHES DE NAISSANCE \/ VITILIGO.*?[\s\S]*?(?=\n\n|$)/);
+            if (skinMatch) {
+                prioritySection += `
+🎯 PRIORITÉ ABSOLUE - TACHES DE NAISSANCE / VITILIGO :
+${skinMatch[0]}
+⚠️ CES TACHES SONT VISIBLES ET MISES EN VALEUR SUR L'ENSEMBLE DE LA PEAU
+`;
+            }
+        }
 
         // Déterminer les instructions visage selon le cas
         let faceInstructions = '';
@@ -731,7 +763,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
 👇 INSTRUCTIONS ULTRA-RÉALISTES POUR UN VISAGE HUMAIN AUTHENTIQUE 👇
 - Rendu hyper réaliste style photo professionnelle (PAS DE RENDU IA LISSE)
 - Peau avec texture naturelle : pores visibles à différentes échelles, relief cutané
-- Imperfections subtiles conservées : petits grains de beauté, rougeurs légères, variations de teinte
+- ${hasPrioritySkin ? 'Outre les taches de naissance prioritaires décrites ci-dessus,' : ''} imperfections subtiles conservées : petits grains de beauté, rougeurs légères, variations de teinte
 - Poils de duvet très fins visibles sur les joues et le contour du visage
 - Cils : chaque cil est individuel, courbé naturellement, pas en paquets
 - Sourcils : poils dessinés un par un, avec différentes directions et épaisseurs
@@ -739,12 +771,10 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
 - Le visage doit être STRICTEMENT IDENTIQUE à l'image de référence - AUCUNE modification des traits`;
             
             eyesInstructions = `
-👁️ YEUX ULTRA-RÉALISTES 8K :
-- Iris hyper détaillés avec motifs complexes (comme une photo macro)
-- Vaisseaux sanguins très fins visibles dans le blanc de l'œil
-- Reflets multiples dans les yeux (catchlights) nets et naturels
-- Pupilles qui réagissent à la lumière
-- Netteté maximale sur les yeux (point focal de l'image)`;
+👁️ YEUX :
+${hasPriorityEyes ? 
+  '- Conformément à la description prioritaire ci-dessus, les yeux sont de couleurs différentes avec précision 8K' : 
+  '- Iris hyper détaillés avec motifs complexes (comme une photo macro)\n- Vaisseaux sanguins très fins visibles dans le blanc de l œil\n- Reflets multiples dans les yeux (catchlights) nets et naturels\n- Pupilles qui réagissent à la lumière\n- Netteté maximale sur les yeux (point focal de l image)'}`;
         }
 
         return `Suite de la transition - DEUXIÈME PARTIE de 6 secondes.
@@ -755,7 +785,8 @@ CONTINUITÉ PARFAITE DU VISAGE - ABSOLUMENT CRUCIAL :
 - RECONNAISSABLE AU PREMIER COUP D'ŒIL - AUCUNE ERREUR POSSIBLE
 - La transformation ne concerne QUE les vêtements, le corps et les accessoires
 ${avatarTransformations.includes('VISAGE HUMAIN CONSERVÉ') ? '- ⚠️ Le visage reste HUMAIN et IDENTIQUE à la partie 1 - seuls les éléments Na\'vi sont ajoutés' : ''}
-${specialFeatures.includes('YEUX ULTRA-RÉALISTES 8K (HÉTÉROCHROMIE)') ? '- ⚠️ Les yeux restent différents mais conservent la même précision 8K' : ''}
+
+${prioritySection}
 
 ${faceInstructions}
 
@@ -807,7 +838,7 @@ ${this.userData.enableFluo ?
 
 ${alienTransformations}
 ${avatarTransformations}
-${specialFeatures}  // ← AJOUTÉ ICI POUR LES YEUX ET TACHES
+${!hasPriorityEyes && !hasPrioritySkin ? specialFeatures : ''}
 
 MAQUILLAGE APPLIQUÉ (DÉJÀ FAIT) :
 - Teint parfait et lumineux (déjà appliqué)
@@ -1391,4 +1422,4 @@ window.initCharacters = initCharacters;
 window.displayPrompt = displayPrompt;
 window.updateRecap = updateRecap;
 
-console.log("📦 script.js chargé avec TOUS les effets - CORRIGÉ : transformations Avatar/Alien uniquement en PARTIE 2 - OPTIONS SPÉCIALES (yeux/taches) ajoutées");
+console.log("📦 script.js chargé avec TOUS les effets - CORRIGÉ : transformations Avatar/Alien uniquement en PARTIE 2 - OPTIONS SPÉCIALES avec PRIORITÉ ABSOLUE");

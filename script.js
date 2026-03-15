@@ -2,7 +2,7 @@
 // CORRIGÉ : Les transformations Avatar/Alien n'apparaissent que dans la PARTIE 2
 // CORRIGÉ : Gestion des deux cas Avatar (visage humain conservé OU transformation complète) pour TOUS les types d'avatar
 // CORRIGÉ : Ajout des options spéciales (yeux différents, taches de naissance) dans la PARTIE 2
-// CORRIGÉ : Priorité absolue aux options spéciales quand elles sont cochées
+// CORRIGÉ : Priorité absolue aux options spéciales quand elles sont cochées avec renforcement vidéo
 
 console.log("🚀 Chargement de script.js...");
 
@@ -649,7 +649,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
     }
 
     // ===== PARTIE 2 - TOUTES LES TRANSFORMATIONS APPLIQUÉES =====
-    // AVEC PRIORITÉ ABSOLUE AUX OPTIONS SPÉCIALES (YEUX/TACHES)
+    // AVEC PRIORITÉ ABSOLUE AUX OPTIONS SPÉCIALES (YEUX/TACHES) + RENFORT VIDÉO
     generatePart2() {
         const country = countries[this.userData.country];
         const seductionPhrase = this.getSeductionPhrase(this.userData.seductionLevel);
@@ -705,34 +705,42 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
         const avatarMode = document.getElementById('enableAvatarMode')?.checked || false;
         const keepFace = document.getElementById('avatarKeepFace')?.checked || false;
 
-        // ===== CONSTRUCTION DES SECTIONS PRIORITAIRES =====
-        let prioritySection = '';
+        // ===== CONSTRUCTION DES SECTIONS PRIORITAIRES AVEC RENFORT VIDÉO =====
+        let priorityReinforcement = '';
         let hasPriorityEyes = false;
         let hasPrioritySkin = false;
 
         // Extraire les sections spéciales si elles existent
         if (specialFeatures.includes('👁️ YEUX ULTRA-RÉALISTES 8K (HÉTÉROCHROMIE)')) {
             hasPriorityEyes = true;
-            const eyesMatch = specialFeatures.match(/👁️ YEUX ULTRA-RÉALISTES 8K \(HÉTÉROCHROMIE\) :[\s\S]*?(?=\n\n|$)/);
-            if (eyesMatch) {
-                prioritySection += `
-🎯 PRIORITÉ ABSOLUE - YEUX DIFFÉRENTS (HÉTÉROCHROMIE) :
-${eyesMatch[0]}
-⚠️ CES INSTRUCTIONS SUR LES YEUX PRIMENT SUR TOUTE AUTRE DESCRIPTION
+            priorityReinforcement += `
+═════════════════════════════════════════════════════════════════════════════
+🔴🔴🔴 INSTRUCTION PRIORITAIRE ABSOLUE POUR LA VIDÉO - YEUX DIFFÉRENTS 🔴🔴🔴
+═════════════════════════════════════════════════════════════════════════════
+- LES YEUX SONT DE COULEURS DIFFÉRENTES (HÉTÉROCHROMIE)
+- Œil GAUCHE et Œil DROIT ont des couleurs distinctes et VISIBLEMENT différentes
+- CETTE CARACTÉRISTIQUE EST ESSENTIELLE ET DOIT ÊTRE CLAIREMENT VISIBLE DANS LA VIDÉO
+- Les yeux conservent une précision 8K avec vaisseaux sanguins visibles
+- Les reflets multiples dans les yeux sont conservés
+- PRIORITÉ MAXIMALE - NE PAS IGNORER CETTE INSTRUCTION
+═════════════════════════════════════════════════════════════════════════════
 `;
-            }
         }
 
         if (specialFeatures.includes('🎨 TACHES DE NAISSANCE / VITILIGO')) {
             hasPrioritySkin = true;
-            const skinMatch = specialFeatures.match(/🎨 TACHES DE NAISSANCE \/ VITILIGO.*?[\s\S]*?(?=\n\n|$)/);
-            if (skinMatch) {
-                prioritySection += `
-🎯 PRIORITÉ ABSOLUE - TACHES DE NAISSANCE / VITILIGO :
-${skinMatch[0]}
-⚠️ CES TACHES SONT VISIBLES ET MISES EN VALEUR SUR L'ENSEMBLE DE LA PEAU
+            priorityReinforcement += `
+═════════════════════════════════════════════════════════════════════════════
+🔴🔴🔴 INSTRUCTION PRIORITAIRE ABSOLUE POUR LA VIDÉO - TACHES DE NAISSANCE 🔴🔴🔴
+═════════════════════════════════════════════════════════════════════════════
+- LA PEAU COMPORTE DES TACHES DE NAISSANCE / VITILIGO
+- Ces taches sont VISIBLES sur le visage et le corps
+- ELLES FONT PARTIE INTÉGRANTE DE SON IDENTITÉ
+- Contours irréguliers et naturels, texture de peau préservée
+- Les taches sont mises en valeur et clairement visibles dans la vidéo
+- PRIORITÉ MAXIMALE - NE PAS IGNORER CETTE INSTRUCTION
+═════════════════════════════════════════════════════════════════════════════
 `;
-            }
         }
 
         // Déterminer les instructions visage selon le cas
@@ -773,7 +781,7 @@ ${skinMatch[0]}
             eyesInstructions = `
 👁️ YEUX :
 ${hasPriorityEyes ? 
-  '- Conformément à la description prioritaire ci-dessus, les yeux sont de couleurs différentes avec précision 8K' : 
+  '⚠️ CONFORMÉMENT AUX INSTRUCTIONS PRIORITAIRES CI-DESSUS, LES YEUX SONT DE COULEURS DIFFÉRENTES (HÉTÉROCHROMIE) AVEC PRÉCISION 8K' : 
   '- Iris hyper détaillés avec motifs complexes (comme une photo macro)\n- Vaisseaux sanguins très fins visibles dans le blanc de l œil\n- Reflets multiples dans les yeux (catchlights) nets et naturels\n- Pupilles qui réagissent à la lumière\n- Netteté maximale sur les yeux (point focal de l image)'}`;
         }
 
@@ -786,7 +794,7 @@ CONTINUITÉ PARFAITE DU VISAGE - ABSOLUMENT CRUCIAL :
 - La transformation ne concerne QUE les vêtements, le corps et les accessoires
 ${avatarTransformations.includes('VISAGE HUMAIN CONSERVÉ') ? '- ⚠️ Le visage reste HUMAIN et IDENTIQUE à la partie 1 - seuls les éléments Na\'vi sont ajoutés' : ''}
 
-${prioritySection}
+${priorityReinforcement}
 
 ${faceInstructions}
 
@@ -1422,4 +1430,4 @@ window.initCharacters = initCharacters;
 window.displayPrompt = displayPrompt;
 window.updateRecap = updateRecap;
 
-console.log("📦 script.js chargé avec TOUS les effets - CORRIGÉ : transformations Avatar/Alien uniquement en PARTIE 2 - OPTIONS SPÉCIALES avec PRIORITÉ ABSOLUE");
+console.log("📦 script.js chargé avec TOUS les effets - CORRIGÉ : transformations Avatar/Alien uniquement en PARTIE 2 - OPTIONS SPÉCIALES avec PRIORITÉ ABSOLUE et RENFORT VIDÉO");

@@ -1,4 +1,4 @@
-// outfits.js - Bibliothèque complète
+// outfits.js - Bibliothèque complète avec TENUES MULTIPLES
 
 const outfitsLibrary = {
     spain: {
@@ -55,6 +55,20 @@ const outfitsLibrary = {
                 colors: ["noir", "argent"],
                 elements: ["volants", "transparences", "dentelle", "fente jusqu'en haut de cuisse"],
                 accessories: ["peigne en argent", "rose rouge foncé", "résille"]
+            },
+            {
+                name: "Royale andalouse",
+                description: "Robe de flamenco luxueuse",
+                colors: ["bordeaux", "or"],
+                elements: ["velours brodé", "manches longues transparentes", "volants multiples", "traîne"],
+                accessories: ["peigne en écaille", "éventail en dentelle", "châle de Manille"]
+            },
+            {
+                name: "Gitane moderne",
+                description: "Robe courte à pois",
+                colors: ["rouge", "blanc"],
+                elements: ["pois", "volants", "décolleté généreux", "fente haute"],
+                accessories: ["fleur dans les cheveux", "boucles d'oreilles créoles", "castagnettes"]
             }
         ]
     },
@@ -112,6 +126,20 @@ const outfitsLibrary = {
                 colors: ["vert", "rose"],
                 elements: ["plumes", "sequins", "franges", "découpes"],
                 accessories: ["coiffe tropicale", "bottes"]
+            },
+            {
+                name: "Fête à Rio",
+                description: "Bikini de carnaval",
+                colors: ["bleu", "jaune"],
+                elements: ["bikini strassé", "jupe courte", "plumes", "paillettes"],
+                accessories: ["couronne de plumes", "bracelets dorés"]
+            },
+            {
+                name: "Samba night",
+                description: "Robe courte à sequins",
+                colors: ["argent", "rose"],
+                elements: ["robe moulante", "sequins", "fente haute", "dos nu"],
+                accessories: ["boucles d'oreilles scintillantes", "bottes argentées"]
             }
         ]
     },
@@ -169,6 +197,20 @@ const outfitsLibrary = {
                 colors: ["blanc", "argent"],
                 elements: ["dentelle", "perles", "transparences"],
                 accessories: ["ceinture argent", "bijoux"]
+            },
+            {
+                name: "Caftan pourpre",
+                description: "Caftan en velours pourpre",
+                colors: ["pourpre", "or"],
+                elements: ["velours", "broderies dorées", "manches larges", "fente"],
+                accessories: ["ceinture en or", "collier de perles"]
+            },
+            {
+                name: "Takchita turquoise",
+                description: "Robe turquoise brodée",
+                colors: ["turquoise", "argent"],
+                elements: ["soie", "broderies argentées", "transparences", "ceinture"],
+                accessories: ["bijoux en argent", "voile assorti"]
             }
         ]
     },
@@ -226,6 +268,20 @@ const outfitsLibrary = {
                 colors: ["multicolore"],
                 elements: ["corset + jupe", "motifs wax"],
                 accessories: ["bijoux dorés"]
+            },
+            {
+                name: "Princesse africaine",
+                description: "Robe longue en wax",
+                colors: ["bleu", "jaune"],
+                elements: ["robe longue", "manches bouffantes", "décolleté", "fente"],
+                accessories: ["turbant assorti", "bijoux en or"]
+            },
+            {
+                name: "Moderne Dakar",
+                description: "Ensemble crop top + jupe",
+                colors: ["orange", "vert"],
+                elements: ["crop top wax", "jupe longue fendue", "ceinture"],
+                accessories: ["bracelets dorés", "boucles d'oreilles"]
             }
         ]
     },
@@ -283,6 +339,20 @@ const outfitsLibrary = {
                 colors: ["rose", "argent"],
                 elements: ["broderies fleurs", "transparences"],
                 accessories: ["obi argent", "éventail"]
+            },
+            {
+                name: "Princesse impériale",
+                description: "Kimono de cour",
+                colors: ["pourpre", "or"],
+                elements: ["soie épaisse", "broderies phénix", "manches longues", "traîne"],
+                accessories: ["couronne", "éventail impérial"]
+            },
+            {
+                name: "Moderne Harajuku",
+                description: "Tenue streetwear chic",
+                colors: ["noir", "rose"],
+                elements: ["corset", "jupe courte", "bas résille", "bottines"],
+                accessories: ["accessoires floraux", "sac à main"]
             }
         ]
     },
@@ -340,6 +410,20 @@ const outfitsLibrary = {
                 colors: ["bleu nuit", "argent"],
                 elements: ["paillettes", "transparences"],
                 accessories: ["bijoux argent"]
+            },
+            {
+                name: "Marriage royal",
+                description: "Ensemble de mariée chic",
+                colors: ["rouge", "or"],
+                elements: ["lehenga volumineux", "choli brodé", "voile", "strass"],
+                accessories: ["bijoux lourds", "maang tikka", "bangles"]
+            },
+            {
+                name: "Bollywood diva",
+                description: "Robe de star",
+                colors: ["rose", "argent"],
+                elements: ["robe moulante", "paillettes", "fente haute", "dos nu"],
+                accessories: ["bijoux scintillants", "chaussures à talons"]
             }
         ]
     },
@@ -397,6 +481,20 @@ const outfitsLibrary = {
                 colors: ["rose", "or"],
                 elements: ["broderies fleurs", "manches longues"],
                 accessories: ["épingles précieuses"]
+            },
+            {
+                name: "Phénix d'or",
+                description: "Roche de cérémonie",
+                colors: ["rouge", "or"],
+                elements: ["soie", "broderies phénix", "manches larges", "traîne"],
+                accessories: ["couronne", "bijoux en jade"]
+            },
+            {
+                name: "Shanghai nights",
+                description: "Robe courte moderne",
+                colors: ["noir", "rouge"],
+                elements: ["robe courte", "dentelle", "fente", "col mandarin"],
+                accessories: ["éventail pliant", "épingles à cheveux"]
             }
         ]
     },
@@ -454,38 +552,88 @@ const outfitsLibrary = {
                 colors: ["rose", "or"],
                 elements: ["drapés", "transparences", "fente haute"],
                 accessories: ["couronne fleurs", "bijoux"]
+            },
+            {
+                name: "Nymphe",
+                description: "Robe fluide légère",
+                colors: ["vert d'eau", "argent"],
+                elements: ["voiles", "drapés", "fleurs", "pieds nus"],
+                accessories: ["couronne de fleurs", "bijoux en perles"]
+            },
+            {
+                name: "Prêtresse",
+                description: "Tenue de cérémonie",
+                colors: ["blanc", "or"],
+                elements: ["tunique longue", "drapés", "ceinture", "sandales"],
+                accessories: ["couronne de laurier", "bijoux dorés"]
+            }
+        ]
+    },
+    neptune: {
+        starting: [
+            {
+                name: "Abysse chic",
+                top: "Bikini coquillage",
+                bottom: "Paréo bleu",
+                details: "Pieds nus, bijoux de perles"
+            },
+            {
+                name: "Créature marine",
+                top: "Haut écailles",
+                bottom: "Jupe courte voile",
+                details: "Effet aqueux, pieds nus"
+            }
+        ],
+        final: [
+            {
+                name: "Reine des mers",
+                description: "Tenue de créature des profondeurs",
+                colors: ["bleu abyssal", "argent", "turquoise"],
+                elements: ["écailles holographiques", "voiles d'eau", "cristaux", "effet aqueux"],
+                accessories: ["couronne de corail", "bijoux de perles"]
+            },
+            {
+                name: "Sirène royale",
+                description: "Robe queue de sirène",
+                colors: ["turquoise", "violet"],
+                elements: ["queue de sirène", "écailles", "voiles"],
+                accessories: ["couronne de coquillages", "bijoux"]
             }
         ]
     }
 };
 
-// Fonction pour obtenir une tenue de départ aléatoire ou spécifique
+// Fonction pour obtenir une tenue de départ ALEATOIRE
 function getRandomStartingOutfit(country, styleIndex = null) {
     const countryOutfits = outfitsLibrary[country]?.starting;
     if (!countryOutfits) return null;
     
-    if (styleIndex !== null) {
+    // Si un index spécifique est demandé
+    if (styleIndex !== null && styleIndex >= 0 && styleIndex < countryOutfits.length) {
         return countryOutfits[styleIndex];
     }
     
+    // Sinon, choix ALÉATOIRE
     const randomIndex = Math.floor(Math.random() * countryOutfits.length);
     return countryOutfits[randomIndex];
 }
 
-// Fonction pour obtenir une tenue finale aléatoire ou spécifique
+// Fonction pour obtenir une tenue finale ALEATOIRE
 function getRandomFinalOutfit(country, styleIndex = null) {
     const countryOutfits = outfitsLibrary[country]?.final;
     if (!countryOutfits) return null;
     
-    if (styleIndex !== null) {
+    // Si un index spécifique est demandé
+    if (styleIndex !== null && styleIndex >= 0 && styleIndex < countryOutfits.length) {
         return countryOutfits[styleIndex];
     }
     
+    // Sinon, choix ALÉATOIRE
     const randomIndex = Math.floor(Math.random() * countryOutfits.length);
     return countryOutfits[randomIndex];
 }
 
-// Fonction pour générer une description complète de tenue finale
+// Fonction pour générer une description complète de tenue finale (ALÉATOIRE)
 function generateFinalOutfitDescription(country, styleIndex = null) {
     const outfit = getRandomFinalOutfit(country, styleIndex);
     if (!outfit) return '';

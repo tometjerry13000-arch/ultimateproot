@@ -1,8 +1,9 @@
-// script.js - Version ULTIME avec TOUS les effets - TABLEAUX ALIEN COMPLETS + OPTIONS SPÉCIALES
-// CORRIGÉ : Les transformations Avatar/Alien n'apparaissent que dans la PARTIE 2
-// CORRIGÉ : Gestion des deux cas Avatar (visage humain conservé OU transformation complète) pour TOUS les types d'avatar
-// CORRIGÉ : Ajout des options spéciales (yeux différents, taches de naissance) dans la PARTIE 2
-// CORRIGÉ : Priorité absolue aux options spéciales quand elles sont cochées avec renforcement vidéo
+// script.js - Version ULTIME avec TOUS les effets - TABLEAUX ALIEN COMPLETS + OPTIONS SPÉCIALES + MODE ANIMAL
+// CORRIGÉ : Les transformations (Avatar/Alien/Animal) n'apparaissent que dans la PARTIE 2
+// CORRIGÉ : Gestion des deux cas Avatar (visage humain conservé OU transformation complète)
+// CORRIGÉ : Ajout des options spéciales (yeux différents, taches de naissance)
+// CORRIGÉ : Priorité absolue aux options spéciales avec renfort vidéo
+// CORRIGÉ : Intégration du MODE ANIMAL (chatte, tigresse, panthère, lionne, lapine)
 
 console.log("🚀 Chargement de script.js...");
 
@@ -373,6 +374,47 @@ class PromptGenerator {
         return avatarText;
     }
 
+    // ===== MODE ANIMAL =====
+    generateAnimalTransformations() {
+        if (typeof window.animalData === 'undefined') return '';
+        if (!document.getElementById('enableAnimalMode')?.checked) return '';
+        
+        const type = document.getElementById('animalType')?.value || 'chatte';
+        const color = document.getElementById('animalColor')?.value || '';
+        const keepFace = document.getElementById('animalKeepFace')?.checked || false;
+        const ears = document.getElementById('animalEars')?.checked || false;
+        const tail = document.getElementById('animalTail')?.checked || false;
+        const fur = document.getElementById('animalFur')?.checked || false;
+        const eyes = document.getElementById('animalEyes')?.checked || false;
+        const claws = document.getElementById('animalClaws')?.checked || false;
+        
+        const animal = window.animalData?.[type];
+        if (!animal) return '';
+        
+        let animalText = '\n\n🐾 TRANSFORMATION ANIMALE - DÉJÀ ACCOMPLIE :\n';
+        
+        if (keepFace) {
+            animalText += `- ⚠️ VISAGE HUMAIN CONSERVÉ : le visage reste STRICTEMENT IDENTIQUE à l'image de référence, seuls les attributs animaux sont ajoutés\n`;
+        } else {
+            animalText += `- Transformation COMPLÈTE en ${animal.name}\n`;
+            if (animal.traits.museau) animalText += `- ${animal.traits.museau}\n`;
+        }
+        
+        if (ears) animalText += `- ${animal.traits.oreilles}\n`;
+        if (tail) animalText += `- ${animal.traits.queue}\n`;
+        if (fur) animalText += `- ${animal.traits.fourrure || 'Fourrure texturée'}\n`;
+        if (eyes) animalText += `- ${animal.traits.yeux}\n`;
+        if (claws) animalText += `- ${animal.traits.griffes || 'Griffes'}\n`;
+        if (animal.traits.moustaches) animalText += `- ${animal.traits.moustaches}\n`;
+        if (animal.traits.comportement) animalText += `- ${animal.traits.comportement}\n`;
+        
+        if (color) animalText += `- Robe/couleur : ${color}\n`;
+        
+        animalText += `- La tenue du personnage est CONSERVÉE et s'adapte à la morphologie animale\n`;
+        
+        return animalText;
+    }
+
     // ===== OPTIONS SPÉCIALES (YEUX DIFFÉRENTS + TACHES DE NAISSANCE) =====
     generateSpecialFeatures() {
         let specialText = '';
@@ -649,7 +691,6 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
     }
 
     // ===== PARTIE 2 - TOUTES LES TRANSFORMATIONS APPLIQUÉES =====
-    // AVEC PRIORITÉ ABSOLUE AUX OPTIONS SPÉCIALES (YEUX/TACHES) + RENFORT VIDÉO
     generatePart2() {
         const country = countries[this.userData.country];
         const seductionPhrase = this.getSeductionPhrase(this.userData.seductionLevel);
@@ -686,6 +727,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
         // TOUTES LES TRANSFORMATIONS SONT GÉNÉRÉES ICI (UNIQUEMENT EN PARTIE 2)
         const alienTransformations = this.generateAlienTransformations();
         const avatarTransformations = this.generateAvatarTransformations();
+        const animalTransformations = this.generateAnimalTransformations();
         const specialFeatures = this.generateSpecialFeatures();
         
         const advancedEffects = this.generateAdvancedEffects();
@@ -705,7 +747,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
         const avatarMode = document.getElementById('enableAvatarMode')?.checked || false;
         const keepFace = document.getElementById('avatarKeepFace')?.checked || false;
 
-        // ===== CONSTRUCTION DES SECTIONS PRIORITAIRES AVEC RENFORT VIDÉO =====
+        // ===== CONSTRUCTION DES SECTIONS PRIORITAIRES =====
         let priorityReinforcement = '';
         let hasPriorityEyes = false;
         let hasPrioritySkin = false;
@@ -719,9 +761,7 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
 ═════════════════════════════════════════════════════════════════════════════
 - LES YEUX SONT DE COULEURS DIFFÉRENTES (HÉTÉROCHROMIE)
 - Œil GAUCHE et Œil DROIT ont des couleurs distinctes et VISIBLEMENT différentes
-- CETTE CARACTÉRISTIQUE EST ESSENTIELLE ET DOIT ÊTRE CLAIREMENT VISIBLE DANS LA VIDÉO
-- Les yeux conservent une précision 8K avec vaisseaux sanguins visibles
-- Les reflets multiples dans les yeux sont conservés
+- CETTE CARACTÉRISTIQUE EST ESSENTIELLE ET DOIT ÊTRE CLAIREMENT VISIBLE
 - PRIORITÉ MAXIMALE - NE PAS IGNORER CETTE INSTRUCTION
 ═════════════════════════════════════════════════════════════════════════════
 `;
@@ -736,8 +776,6 @@ IMPORTANT - PRÉPARATION POUR LA PARTIE 2 :
 - LA PEAU COMPORTE DES TACHES DE NAISSANCE / VITILIGO
 - Ces taches sont VISIBLES sur le visage et le corps
 - ELLES FONT PARTIE INTÉGRANTE DE SON IDENTITÉ
-- Contours irréguliers et naturels, texture de peau préservée
-- Les taches sont mises en valeur et clairement visibles dans la vidéo
 - PRIORITÉ MAXIMALE - NE PAS IGNORER CETTE INSTRUCTION
 ═════════════════════════════════════════════════════════════════════════════
 `;
@@ -846,6 +884,7 @@ ${this.userData.enableFluo ?
 
 ${alienTransformations}
 ${avatarTransformations}
+${animalTransformations}
 ${!hasPriorityEyes && !hasPrioritySkin ? specialFeatures : ''}
 
 MAQUILLAGE APPLIQUÉ (DÉJÀ FAIT) :
@@ -934,6 +973,7 @@ RAPPEL ULTIME - TRANSITION NATURELLE :
         const keepFace = document.getElementById('avatarKeepFace')?.checked || false;
         const eyesDiff = document.getElementById('enable-eyes')?.checked || false;
         const skinDiff = document.getElementById('enable-skin')?.checked || false;
+        const animalMode = document.getElementById('enableAnimalMode')?.checked || false;
         
         let avatarLine = '';
         if (avatarMode) {
@@ -944,13 +984,26 @@ RAPPEL ULTIME - TRANSITION NATURELLE :
             }
         }
         
+        let animalLine = '';
+        if (animalMode) {
+            const animalType = document.getElementById('animalType')?.value || 'chatte';
+            const animalNames = {
+                'chatte': 'CHATTE',
+                'lapine': 'LAPINE',
+                'tigresse': 'TIGRESSE',
+                'panthere': 'PANTHÈRE',
+                'lionne': 'LIONNE'
+            };
+            animalLine = `\n16. MODE ANIMAL ACTIVÉ : Transformation en ${animalNames[animalType] || animalType} - Attributs animaux ajoutés au corps`;
+        }
+        
         let specialLine = '';
         if (eyesDiff && skinDiff) {
-            specialLine = '\n16. OPTIONS SPÉCIALES 8K : Yeux de couleurs différentes (hétérochromie) + Taches de naissance/vitiligo - Rendu macro 8K';
+            specialLine = '\n17. OPTIONS SPÉCIALES 8K : Yeux de couleurs différentes (hétérochromie) + Taches de naissance/vitiligo - Rendu macro 8K';
         } else if (eyesDiff) {
-            specialLine = '\n16. OPTIONS SPÉCIALES 8K : Yeux de couleurs différentes (hétérochromie) - Rendu macro 8K avec vaisseaux sanguins visibles';
+            specialLine = '\n17. OPTIONS SPÉCIALES 8K : Yeux de couleurs différentes (hétérochromie) - Rendu macro 8K avec vaisseaux sanguins visibles';
         } else if (skinDiff) {
-            specialLine = '\n16. OPTIONS SPÉCIALES 8K : Taches de naissance/vitiligo - Rendu hyper-réaliste 8K avec texture de peau préservée';
+            specialLine = '\n17. OPTIONS SPÉCIALES 8K : Taches de naissance/vitiligo - Rendu hyper-réaliste 8K avec texture de peau préservée';
         }
         
         return `CONSIGNES DE COHÉRENCE ABSOLUE :
@@ -968,7 +1021,7 @@ RAPPEL ULTIME - TRANSITION NATURELLE :
 11. MOUVEMENTS PRÉCIS : Chorégraphie technique et sensuelle
 12. INSPIRATION CULTURELLE : ${country.name} - ${country.dance}
 13. ⚠️ TRANSFORMATION DÉJÀ ACCOMPLIE - CRUCIAL : AUCUN changement visible pendant la PARTIE 2 - tout a eu lieu PENDANT que les mains cachaient l'objectif
-14. FINALE SPECTACULAIRE : À la 4ème seconde, elle exécute son geste final face au public, maintient la pose, puis effet de fin choisi${avatarLine}${specialLine}`;
+14. FINALE SPECTACULAIRE : À la 4ème seconde, elle exécute son geste final face au public, maintient la pose, puis effet de fin choisi${avatarLine}${animalLine}${specialLine}`;
     }
 
     generateFullPrompt() {
@@ -1123,13 +1176,14 @@ function updateRecap() {
     const alienActive = document.getElementById('enableAlienMode')?.checked ? '👽' : '';
     const avatarActive = document.getElementById('enableAvatarMode')?.checked ? '🔵' : '';
     const keepFace = document.getElementById('avatarKeepFace')?.checked ? '👤' : '';
+    const animalActive = document.getElementById('enableAnimalMode')?.checked ? '🐾' : '';
     const eyesActive = document.getElementById('enable-eyes')?.checked ? '👁️' : '';
     const skinActive = document.getElementById('enable-skin')?.checked ? '🎨' : '';
     
     const recap = `
 🌍 Personnage : ${country.name}
 💃 Danse : ${country.dance}
-💇 Cheveux fluo : ${fluoActive} ${alienActive} ${avatarActive} ${keepFace} ${eyesActive} ${skinActive}
+💇 Cheveux fluo : ${fluoActive} ${alienActive} ${avatarActive} ${keepFace} ${animalActive} ${eyesActive} ${skinActive}
     `;
     
     const recapDiv = document.getElementById('recapContent');
@@ -1219,6 +1273,10 @@ function setupConditionalOptions() {
         });
     }
     
+    // Mode Animal - mise à jour des couleurs
+    document.getElementById('enableAnimalMode')?.addEventListener('change', updateAnimalColors);
+    document.getElementById('animalType')?.addEventListener('change', updateAnimalColors);
+    
     // Options spéciales (yeux + taches)
     document.getElementById('enable-eyes')?.addEventListener('change', function() {
         const controls = document.getElementById('eye-controls');
@@ -1228,6 +1286,23 @@ function setupConditionalOptions() {
     document.getElementById('enable-skin')?.addEventListener('change', function() {
         const controls = document.getElementById('skin-controls');
         if (controls) controls.style.display = this.checked ? 'block' : 'none';
+    });
+}
+
+function updateAnimalColors() {
+    const type = document.getElementById('animalType')?.value;
+    const colorSelect = document.getElementById('animalColor');
+    if (!colorSelect || !type || !window.animalData) return;
+    
+    const animal = window.animalData[type];
+    if (!animal) return;
+    
+    colorSelect.innerHTML = '';
+    animal.couleursDisponibles.forEach(couleur => {
+        const option = document.createElement('option');
+        option.value = couleur;
+        option.textContent = couleur.charAt(0).toUpperCase() + couleur.slice(1);
+        colorSelect.appendChild(option);
     });
 }
 
@@ -1322,6 +1397,11 @@ function attachEvents() {
         if (options) options.style.display = this.checked ? 'block' : 'none';
     });
     
+    document.getElementById('enableAnimalMode')?.addEventListener('change', function() {
+        const options = document.getElementById('animalOptions');
+        if (options) options.style.display = this.checked ? 'block' : 'none';
+    });
+    
     document.getElementById('enableScript')?.addEventListener('change', function() {
         const options = document.getElementById('scriptOptions');
         if (options) options.style.display = this.checked ? 'block' : 'none';
@@ -1412,6 +1492,9 @@ function startApp() {
     // Remplir les selects des options spéciales
     populateSpecialSelects();
     
+    // Initialiser les couleurs animales
+    setTimeout(updateAnimalColors, 500);
+    
     initCharacters();
     initEvents();
     initImageUpload();
@@ -1430,4 +1513,4 @@ window.initCharacters = initCharacters;
 window.displayPrompt = displayPrompt;
 window.updateRecap = updateRecap;
 
-console.log("📦 script.js chargé avec TOUS les effets - CORRIGÉ : transformations Avatar/Alien uniquement en PARTIE 2 - OPTIONS SPÉCIALES avec PRIORITÉ ABSOLUE et RENFORT VIDÉO");
+console.log("📦 script.js chargé avec TOUS les effets - MODE ANIMAL INTÉGRÉ");

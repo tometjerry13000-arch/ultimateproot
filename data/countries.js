@@ -1389,6 +1389,101 @@ chinese_tradi: {
         part2: ["danse des dragons", "tours rapides", "final en apothéose"]
     }
 },
+
+// ==================== SORCIÈRE HALLOWEEN ====================
+halloween_witch: {
+    type: "witch",
+    name: "🎃 Sorcière Halloween",
+    dance: "Danse Ensorcelante",
+    palmColors: { left: "#ff6b00", right: "#800080" },
+    finalOutfit: {
+        description: "tenue de sorcière festive et sexy pour Halloween",
+        colors: ["orange citrouille", "violet mystique", "noir profond"],
+        elements: [
+            "robe courte en tulle noir avec motifs citrouilles", 
+            "corset en velours orange",
+            "bas résille violet",
+            "bottines à talons avec petites citrouilles",
+            "chapeau pointu de sorcière revisité",
+            "cape courte en satin noir"
+        ],
+        accessories: [
+            "balai magique décoratif",
+            "citrouille lumineuse (lanterne)",
+            "boucles d'oreilles en forme de chauve-souris",
+            "collier avec pendentif citrouille",
+            "baguette magique à étoile",
+            "maquillage noir et orange",
+            "faux ongles orange et noir"
+        ]
+    },
+    hairFluo: ["orange fluo", "violet fluo", "noir", "vert fluo"],
+    background: "forêt hantée la nuit, citrouilles lumineuses, pleine lune, château hanté au loin, brume mystérieuse, toiles d'araignée",
+    danceMoves: {
+        part1: [
+            "mouvements mystérieux et envoûtants",
+            "jeux avec la cape qui flotte",
+            "regards perçants vers la caméra",
+            "caresses sur le balai magique",
+            "poses de sorcière moderne"
+        ],
+        part2: [
+            "danse ensorcelante accélérée",
+            "tours gracieux avec le chapeau",
+            "jeux avec la citrouille lumineuse",
+            "cambrures mystiques",
+            "final avec explosion de confettis orange et noir"
+        ]
+    }
+},
+
+// ==================== SANTA MUERTE ====================
+santa_muerte: {
+    type: "default",
+    name: "💀 Santa Muerte",
+    dance: "Danse Sacrée",
+    palmColors: { left: "#c0c0c0", right: "#000000" },
+    finalOutfit: {
+        description: "tenue de Santa Muerte, sainte de la mort",
+        colors: ["argent métallique", "noir profond", "blanc spectral"],
+        elements: [
+            "robe longue fluide blanche ou noire",
+            "corset argenté orné de motifs de crânes",
+            "voile de dentelle noire sur le visage",
+            "cape longue en velours noir",
+            "gants longs en dentelle argentée",
+            "ceinture ornée de roses noires"
+        ],
+        accessories: [
+            "masque ou maquillage de crâne (calavera)",
+            "couronne de fleurs (œillets blancs et rouges)",
+            "globe terrestre (accessoire symbolique)",
+            "faux squelettes miniatures",
+            "roses noires et blanches",
+            "encens qui fume",
+            "bougies votives",
+            "bijoux en argent (crânes, os)"
+        ]
+    },
+    hairFluo: ["argent", "blanc", "noir", "violet sombre"],
+    background: "autel mexicain la nuit, bougies allumées, fleurs de cempasúchil (souci), crânes en sucre, ambiance mystique et sacrée, lueurs chaudes des bougies",
+    danceMoves: {
+        part1: [
+            "mouvements lents et solennels",
+            "bras levés en prière",
+            "gestes de bénédiction",
+            "marche majestueuse",
+            "regards mystérieux derrière le voile"
+        ],
+        part2: [
+            "danse rituelle accélérée",
+            "tours gracieux avec la cape",
+            "jeux avec les roses",
+            "cambrures de sainte",
+            "final en pose de bénédiction, bras écartés"
+        ]
+    }
+},
        circus: {
         type: "circus",
         name: "🎪 Acrobate",
